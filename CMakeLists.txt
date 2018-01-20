@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.2)
 
 configure_file(version.h.in version.h)
 
-set(HEADERS print_ip.h)
+set(HEADERS print_ip.h CustomAllocator.h ChunkPool.h)
 
 add_executable(print_ip ${HEADERS} main.cpp)
 
