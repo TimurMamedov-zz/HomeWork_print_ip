@@ -44,24 +44,9 @@ struct is_string<std::string>
 };
 //-------------------------------------
 
-//print integral ip
-template<typename T>
-typename std::enable_if<std::is_integral<T>::value, std::string>::type
-print_ip(const T &num, std::ostringstream& os)
-{
-    auto size = sizeof(T);
-    while(size)
-    {
-        auto byte = num >> ((size - 1)*8);
-        os << byte << ".";
-        size--;
-    }
-    os << "\n";
-}
-
 //print vector or list ip
 template<typename T>
-typename std::enable_if<is_vector_or_list<T>::value, std::string>::type
+typename std::enable_if<is_vector_or_list<T>::value, void>::type
 print_ip(const T& cont, std::ostringstream& os)
 {
     if(!cont.empty())
@@ -78,10 +63,27 @@ print_ip(const T& cont, std::ostringstream& os)
 
 //print string ip
 template<typename T>
-typename std::enable_if<is_string<T>::value, std::string>::type
+typename std::enable_if<is_string<T>::value, void>::type
 print_ip(const T& str, std::ostringstream& os)
 {
     os << str << "\n";
+}
+
+//print integral ip
+template<typename T>
+typename std::enable_if<std::is_integral<T>::value, void>::type
+print_ip(const T &num, std::ostringstream& os)
+{
+    auto size = sizeof(T);
+    std::list<std::int16_t> ip;
+    auto temp = num;
+    while(size)
+    {
+        ip.emplace_front(temp & 255);
+        temp = temp >> 8;
+        size--;
+    }
+    print_ip(ip, os);
 }
 
 //print tuple ip
