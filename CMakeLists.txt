@@ -14,6 +14,12 @@ add_executable(print_ip ${HEADERS} main.cpp)
 set (TEST test_print_ip)
 add_executable (${TEST} test_print_ip.cpp)
 
+#set_target_properties (print_ip PROPERTIES
+#        CXX_STANDARD 14
+#        CXX_STANDARD_REQUIRED ON
+#        COMPILE_OPTIONS -Wpedantic -Wall -Wextra
+#)
+
 set_target_properties (print_ip ${TEST} PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED ON

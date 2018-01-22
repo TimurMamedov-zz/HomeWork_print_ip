@@ -8,40 +8,33 @@
 #include <sstream>
 
 template <typename... Args>
-struct container_traits
-{
-    static bool const value = false;
-};
+struct container_traits : std::false_type {};
 
 template <typename... Args>
-struct container_traits<std::vector<Args...> >
-{
-    static bool const value = true;
-};
+struct container_traits<std::vector<Args...> > : std::true_type {};
 
 template <typename... Args>
-struct container_traits<std::list<Args...> >
-{
-    static bool const value = true;
-};
+struct container_traits<std::list<Args...> > : std::true_type {};
 
 template<typename... Args>
 struct is_vector_or_list
 {
     static constexpr bool const value = container_traits<Args...>::value;
 };
+
+template<typename T>
+struct is_tuple : std::false_type {};
+
+/// @private
+template<typename... Ts>
+struct is_tuple<std::tuple<Ts...> > : std::true_type {};
+
 //-------------------------------------
 template <typename T>
-struct is_string
-{
-    static bool const value = false;
-};
+struct is_string : std::false_type {};
 
 template <>
-struct is_string<std::string>
-{
-    static bool const value = true;
-};
+struct is_string<std::string> : std::true_type {};
 //-------------------------------------
 
 //print vector or list ip
@@ -109,9 +102,10 @@ struct TuplePrinter<Tuple, 1>
     }
 };
 
-template<typename... Args>
-void print_ip(const std::tuple<Args...> &bar, std::ostringstream& os)
+template<typename T>
+typename std::enable_if<is_tuple<T>::value, void>::type
+print_ip(const T &tuple, std::ostringstream& os)
 {
-    TuplePrinter<decltype(bar), sizeof...(Args)>::print(bar, os);
+    TuplePrinter<decltype(tuple), std::tuple_size<T>::value>::print(tuple, os);
     os << "\n";
 }
