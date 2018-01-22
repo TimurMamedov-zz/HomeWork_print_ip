@@ -32,11 +32,11 @@ script:
 - cmake --build . --target test
 - cmake --build . --target package
 
-before_script:
+#before_script:
 #  - sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes install doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
   
-script:
-- cd docs
+#script:
+#- cd docs
 #- doxygen doxygen.dox
 
 deploy:
