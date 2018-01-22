@@ -33,11 +33,11 @@ script:
 - cmake --build . --target package
 
 before_script:
-  - sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes install doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
+#  - sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes install doxygen doxygen-doc doxygen-latex doxygen-gui graphviz
   
 script:
 - cd docs
-- doxygen doxygen.dox
+#- doxygen doxygen.dox
 
 deploy:
   - provider: script
