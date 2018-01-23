@@ -1,3 +1,8 @@
+/*!
+\file
+\brief Заголовочный файл с описанием функций, 
+записывающих IP адреса в стандартный поток
+*/
 #pragma once
 #include <iostream>
 #include <vector>
@@ -25,7 +30,7 @@ struct is_vector_or_list
 template<typename T>
 struct is_tuple : std::false_type {};
 
-/// @private
+
 template<typename... Ts>
 struct is_tuple<std::tuple<Ts...> > : std::true_type {};
 
@@ -37,7 +42,11 @@ template <>
 struct is_string<std::string> : std::true_type {};
 //-------------------------------------
 
-//print vector or list ip
+/*!
+Функция для записи IP адреса из std::vector или std::list
+\param[in] T std::vector или std::list
+\param[in] os Поток, в который будет записан IP адрес
+*/
 template<typename T>
 typename std::enable_if<is_vector_or_list<T>::value, void>::type
 print_ip(const T& cont, std::ostringstream& os)
@@ -53,8 +62,11 @@ print_ip(const T& cont, std::ostringstream& os)
         os << *last << "\n";
     }
 }
-
-//print string ip
+/*!
+Функция для записи IP адреса из std::string
+\param[in] T std::string
+\param[in] os Поток, в который будет записан IP адрес
+*/
 template<typename T>
 typename std::enable_if<is_string<T>::value, void>::type
 print_ip(const T& str, std::ostringstream& os)
@@ -62,7 +74,11 @@ print_ip(const T& str, std::ostringstream& os)
     os << str << "\n";
 }
 
-//print integral ip
+/*!
+Функция для записи IP адреса из целочисленного типа
+\param[in] T целочисленный тип
+\param[in] os Поток, в который будет записан IP адрес
+*/
 template<typename T>
 typename std::enable_if<std::is_integral<T>::value, void>::type
 print_ip(const T &num, std::ostringstream& os)
@@ -78,8 +94,11 @@ print_ip(const T &num, std::ostringstream& os)
     }
     print_ip(ip, os);
 }
+/*!
+	\brief Структура для N элемента std::tuple
 
-//print tuple ip
+	Обычный структура, которая содержит в себе функцию печати в поток N элемента  std::tuple
+*/
 template<class Tuple, std::size_t N>
 struct TuplePrinter
 {
@@ -92,7 +111,11 @@ struct TuplePrinter
         os << "." << std::get<N-1>(t);
     }
 };
+/*!
+	\brief Структура для первого элемента std::tuple
 
+	Обычный структура, которая содержит в себе функцию печати в поток первого элемента  std::tuple
+*/
 template<class Tuple>
 struct TuplePrinter<Tuple, 1>
 {
@@ -101,7 +124,11 @@ struct TuplePrinter<Tuple, 1>
         os << std::get<0>(t);
     }
 };
-
+/*!
+Функция для записи IP адреса из std::tuple с одинковыми типами
+\param[in] T std::tuple
+\param[in] os Поток, в который будет записан IP адрес
+*/
 template<typename T>
 typename std::enable_if<is_tuple<T>::value, void>::type
 print_ip(const T &tuple, std::ostringstream& os)
