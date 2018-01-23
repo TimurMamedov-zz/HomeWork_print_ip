@@ -59,7 +59,7 @@ OUTPUT_LANGUAGE        = Russian
 # built into libc) for the transcoding. See the libiconv documentation for the
 # list of possible encodings.
 
-INPUT_ENCODING         = ISO-8859-1
+INPUT_ENCODING         = UTF-8
 
 # The DOXYFILE_ENCODING tag specifies the encoding used for all characters in
 # the config file that follow. The default is UTF-8 which is also the encoding
@@ -67,7 +67,7 @@ INPUT_ENCODING         = ISO-8859-1
 # libiconv (or the iconv built into libc) for the transcoding. See
 # http://www.gnu.org/software/libiconv for the list of possible encodings.
 
-DOXYFILE_ENCODING      = ISO-8859-1
+DOXYFILE_ENCODING      = UTF-8
 
 # This tag can be used to specify the encoding used in the generated output. 
 # The encoding is not always determined by the language that is chosen, 
